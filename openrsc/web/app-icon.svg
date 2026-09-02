@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="OpenRSC">
+  <rect width="512" height="512" rx="112" fill="#0d0d0d"/>
+  <rect x="96" y="96" width="320" height="320" rx="92" fill="#f4f4f4"/>
+  <path d="M176 194l76 62-76 62" fill="none" stroke="#111" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M270 322h76" fill="none" stroke="#111" stroke-width="34" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#171717">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OpenRSC">
+  <meta name="format-detection" content="telephone=no">
+  <title>OpenRSC</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    
+    .icon-sprite { position: fixed; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+    .ui-icon { width: 19px; height: 19px; display: block; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .button .ui-icon { width: 17px; height: 17px; }
+    .command-composer textarea { color: #f5f5f5 !important; -webkit-text-fill-color: #f5f5f5 !important; caret-color: #4ade80; opacity: 1; }
+  </style>
+  <link rel="stylesheet" href="/styles.css?v=20260829.15">
+</head>
+<body>
+  <svg class="icon-sprite" width="0" height="0" aria-hidden="true" focusable="false" style="position:fixed;width:0;height:0;overflow:hidden;pointer-events:none">
+    <symbol id="icon-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="m7 9 3 3-3 3M13 15h4"></path></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"></path></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24"><path d="m3 3 18 18M10.6 5.2A10 10 0 0 1 12 5c6 0 9.5 7 9.5 7a15 15 0 0 1-2 2.8M6.2 6.2C3.8 8 2.5 12 2.5 12S6 19 12 19a9 9 0 0 0 3.5-.7M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></symbol>
+    <symbol id="icon-files" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v5h5M3 7v13a1 1 0 0 0 1 1h10"></path></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5.2-3.4 8.3-8 10-4.6-1.7-8-4.8-8-10V6z"></path><path d="m9 12 2 2 4-4"></path></symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24"><path d="M10 5H5v14h5M14 8l4 4-4 4M8 12h10"></path></symbol>
+    <symbol id="icon-pencil" viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10zM14 7l3 3"></path></symbol>
+    <symbol id="icon-eraser" viewBox="0 0 24 24"><path d="m7 20-4-4L14 5a2.8 2.8 0 0 1 4 4L8 20zM11 19l-5-5M7 20h13"></path></symbol>
+    <symbol id="icon-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"></path><path d="M18.5 9A7 7 0 0 0 6 7M5.5 15A7 7 0 0 0 18 17"></path></symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></symbol>
+    <symbol id="icon-send" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"></path></symbol>
+    <symbol id="icon-folder-plus" viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10H3z"></path><path d="M12 12v5M9.5 14.5h5"></path></symbol>
+    <symbol id="icon-upload" viewBox="0 0 24 24"><path d="m7 9 5-5 5 5M12 4v12"></path><path d="M5 20h14"></path></symbol>
+    <symbol id="icon-chevron-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"></path></symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"></path></symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v5h5"></path></symbol>
+    <symbol id="icon-file-code" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5"></path><path d="m10 12-2 2 2 2m4-4 2 2-2 2"></path></symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m4 17 5-5 4 4 2-2 5 5"></path></symbol>
+    <symbol id="icon-archive" viewBox="0 0 24 24"><path d="M4 7h16v13H4zM3 3h18v4H3zM9 11h6"></path></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 4v12m-5-5 5 5 5-5M5 20h14"></path></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5m4-5v5"></path></symbol>
+    <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v17H6.5A3.5 3.5 0 0 0 3 22zM21 5.5A3.5 3.5 0 0 0 17.5 2H13v17h4.5A3.5 3.5 0 0 1 21 22z"></path></symbol>
+    <symbol id="icon-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5"></path><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></symbol>
+    <symbol id="icon-redo" viewBox="0 0 24 24"><path d="m15 7 5 5-5 5"></path><path d="M4 18v-2a4 4 0 0 1 4-4h12"></path></symbol>
+    <symbol id="icon-save" viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5z"></path><path d="M8 3v6h8V3M8 21v-7h8v7"></path></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 3 2.8 20h18.4z"></path><path d="M12 9v5m0 3h.01"></path></symbol>
+    <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.4 4.1L17.5 8.5l-4.1 1.4L12 14l-1.4-4.1-4.1-1.4 4.1-1.4z"></path><path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8zM5 14l.7 1.8 1.8.7-1.8.7L5 19l-.7-1.8-1.8-.7 1.8-.7z"></path></symbol>
+    <symbol id="icon-bot" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="3"></rect><path d="M12 3v4M8 12h.01M16 12h.01M8 16h8"></path></symbol>
+    <symbol id="icon-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"></path></symbol>
+    <symbol id="icon-external-link" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6H5V6h6"></path></symbol>
+    <symbol id="icon-folder-open" viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v3"></path><path d="m4 20 3-8h14l-3 8z"></path></symbol>
+    <symbol id="icon-command" viewBox="0 0 24 24"><path d="m6 8 4 4-4 4M12 16h6"></path><rect x="3" y="4" width="18" height="16" rx="2"></rect></symbol>
+  </svg>
+  <main id="loginView" class="login-shell">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="login-brand" aria-hidden="true"><svg class="ui-icon"><use href="#icon-terminal"></use></svg></div>
+      <h1 id="loginTitle">Welcome back</h1>
+      <p class="login-copy">Sign in to your OpenRSC command workspace.</p>
+      <form id="loginForm" autocomplete="on">
+        <label for="password">Password</label>
+        <div class="password-field">
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required autofocus>
+          <button id="togglePassword" type="button" class="field-action" aria-label="Show password" title="Show password"><svg class="ui-icon"><use href="#icon-eye"></use></svg></button>
+        </div>
+        <button id="loginButton" type="submit" class="button primary wide">
+          <span>Continue</span><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+        </button>
+        <p id="loginError" class="form-error" role="alert"></p>
+      </form>
+      <p class="login-security"><span class="status-dot"></span>Private, rate-limited session</p>
+    </section>
+  </main>
+
+  <div id="app" class="app-shell" hidden>
+    <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+    <aside id="sidebar" class="sidebar" aria-label="Workspace sidebar">
+      <header class="sidebar-brand">
+        <div class="brand-lockup">
+          <span class="brand-logo" aria-hidden="true"><svg class="ui-icon"><use href="#icon-terminal"></use></svg></span>
+          <div><strong>OpenRSC</strong><small>Remote workspace</small></div>
+        </div>
+        <button id="sidebarClose" class="icon-button mobile-only" type="button" aria-label="Close sidebar"><svg class="ui-icon"><use href="#icon-x"></use></svg></button>
+      </header>
+
+      <button id="newTerminal" class="new-terminal" type="button">
+        <svg class="ui-icon" aria-hidden="true"><use href="#icon-plus"></use></svg><span>New terminal</span><kbd>Ctrl Shift T</kbd>
+      </button>
+
+      <section class="terminal-list-section" aria-labelledby="terminalListTitle">
+        <div class="section-label"><span id="terminalListTitle">Terminals</span><span id="terminalCount">0 / 8</span></div>
+        <div id="terminalTabs" class="terminal-tabs" role="tablist" aria-label="Terminal tabs"></div>
+      </section>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="terminal" type="button">
+          <svg class="nav-icon ui-icon" aria-hidden="true"><use href="#icon-terminal"></use></svg><span>Terminal</span>
+        </button>
+        <button class="nav-item" data-view="files" type="button">
+          <svg class="nav-icon ui-icon" aria-hidden="true"><use href="#icon-files"></use></svg><span>Files</span>
+        </button>
+        <button class="nav-item" data-view="ai" type="button">
+          <svg class="nav-icon ui-icon" aria-hidden="true"><use href="#icon-sparkles"></use></svg><span>AI sessions</span>
+        </button>
+        <button class="nav-item" data-view="security" type="button">
+          <svg class="nav-icon ui-icon" aria-hidden="true"><use href="#icon-shield"></use></svg><span>Security</span>
+        </button>
+      </nav>
+
+      <footer class="sidebar-footer">
+        <div class="account-card">
+          <span class="account-avatar" aria-hidden="true">OR</span>
+          <div><strong id="adminBadge">Checking access</strong><small id="connectionLabel">Connecting…</small></div>
+          <button id="logoutButton" class="icon-button" type="button" aria-label="Sign out" title="Sign out"><svg class="ui-icon"><use href="#icon-logout"></use></svg></button>
+        </div>
+        <span class="version">OpenRSC <span id="versionLabel">v1</span></span>
+      </footer>
+    </aside>
+
+    <section class="app-main">
+      <header class="topbar">
+        <button id="sidebarToggle" class="icon-button mobile-only" type="button" aria-label="Open sidebar"><svg class="ui-icon"><use href="#icon-menu"></use></svg></button>
+        <div class="topbar-title">
+          <strong id="topbarViewTitle">Terminal</strong>
+          <span id="topbarSubtitle">Persistent command workspace</span>
+        </div>
+        <div class="connection-pill"><span class="status-dot"></span><span>Connected</span></div>
+        <button id="newTerminalTop" class="button subtle terminal-action" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#icon-plus"></use></svg><span>New terminal</span></button>
+      </header>
+
+      <main class="workspace">
+        <section id="terminalView" class="view terminal-view active" aria-labelledby="terminalTitle">
+          <h1 id="terminalTitle" class="sr-only">Terminal workspace</h1>
+          <div class="terminal-shell">
+            <header class="terminal-toolbar">
+              <div class="active-terminal">
+                <span class="terminal-glyph" aria-hidden="true"><svg class="ui-icon"><use href="#icon-terminal"></use></svg></span>
+                <div><strong id="activeTerminalName">Terminal 1</strong><span id="terminalState">CMD · starting…</span></div>
+              </div>
+              <div class="toolbar-actions">
+                <button id="renameTerminal" class="tool-button" type="button" title="Rename terminal"><svg class="ui-icon" aria-hidden="true"><use href="#icon-pencil"></use></svg><span>Rename</span></button>
+                <button id="clearTerminal" class="tool-button" type="button" title="Clear visible output"><svg class="ui-icon" aria-hidden="true"><use href="#icon-eraser"></use></svg><span>Clear</span></button>
+                <button id="interruptTerminal" class="tool-button warning" type="button" title="Interrupt and restart"><svg class="ui-icon" aria-hidden="true"><use href="#icon-stop"></use></svg><span>Interrupt</span></button>
+                <button id="resetTerminal" class="tool-button" type="button" title="Reset shell"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg><span>Reset</span></button>
+              </div>
+            </header>
+
+            <div class="terminal-stage">
+              <div id="terminalWelcome" class="terminal-welcome" aria-hidden="true">
+                <span><svg class="ui-icon"><use href="#icon-terminal"></use></svg></span>
+                <div><strong>Command workspace</strong><small>Each tab runs in its own persistent shell.</small></div>
+              </div>
+              <pre id="terminalOutput" class="terminal-output" tabindex="0" aria-label="Terminal output"></pre>
+            </div>
+
+            <div id="composerArea" class="composer-area">
+              <form id="terminalForm" class="command-composer" autocomplete="off">
+                <span class="prompt-mark" aria-hidden="true">$</span>
+                <textarea id="commandInput" rows="1" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off" enterkeyhint="send" aria-label="Command input" placeholder="Type a command…"></textarea>
+                <button class="send-command" type="submit" aria-label="Run command" title="Run command"><svg class="ui-icon" viewBox="0 0 24 24"><use href="#icon-send"></use></svg></button>
+              </form>
+              <p class="shortcut-hint">Enter to run · Shift+Enter for a new line · Arrow keys for history · Ctrl+Tab switches terminals</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="filesView" class="view content-view" aria-labelledby="filesTitle">
+          <div class="view-heading">
+            <div><p class="eyebrow">Workspace</p><h1 id="filesTitle">Files</h1><p>Browse, preview, upload, and organize files on the host.</p></div>
+            <div class="toolbar">
+              <button id="aiFromFiles" class="button subtle" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkles"></use></svg><span class="desktop-action-label">AI session here</span><span class="mobile-action-label">AI</span></button>
+              <button id="newFolder" class="button subtle" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#icon-folder-plus"></use></svg><span class="desktop-action-label">New folder</span><span class="mobile-action-label">New</span></button>
+              <button id="uploadButton" class="button primary" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#icon-upload"></use></svg><span>Upload</span></button>
+              <input id="uploadInput" type="file" multiple hidden>
+            </div>
+          </div>
+          <div id="dropZone" class="file-card">
+            <div class="pathbar">
+              <select id="rootSelect" aria-label="Storage root"></select>
+              <button id="upDirectory" class="icon-button" type="button" aria-label="Parent directory"><svg class="ui-icon"><use href="#icon-chevron-up"></use></svg></button>
+              <input id="pathInput" aria-label="Current path" spellcheck="false">
+              <button id="goPath" class="button subtle" type="button">Go</button>
+              <button id="refreshFiles" class="icon-button" type="button" aria-label="Refresh"><svg class="ui-icon"><use href="#icon-refresh"></use></svg></button>
+            </div>
+            <div id="dropOverlay" class="drop-overlay"><strong>Drop files here</strong><span>Upload to the current directory</span></div>
+            <div class="file-table-wrap">
+              <table class="file-table">
+                <thead><tr><th>Name</th><th>Size</th><th>Modified</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                <tbody id="fileRows"></tbody>
+              </table>
+              <div id="emptyFiles" class="empty-state" hidden><strong>This folder is empty</strong><span>Drop files here or create a folder.</span></div>
+            </div>
+            <div class="file-status"><span id="fileCount">0 items</span><span id="uploadProgress"></span></div>
+          </div>
+        </section>
+
+        <section id="aiView" class="view content-view ai-view" aria-labelledby="aiTitle">
+          <div class="view-heading">
+            <div><p class="eyebrow">Connected tools</p><h1 id="aiTitle">AI sessions</h1><p>Launch Claude or Codex inside one selected workspace.</p></div>
+            <button id="refreshAI" class="button subtle" type="button"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg><span>Refresh status</span></button>
+          </div>
+
+          <section class="ai-directory-panel" aria-labelledby="aiDirectoryTitle">
+            <div class="ai-directory-heading">
+              <span class="ai-directory-icon" aria-hidden="true"><svg class="ui-icon"><use href="#icon-folder-open"></use></svg></span>
+              <div><strong id="aiDirectoryTitle">Working directory</strong><span>Every session starts in this folder.</span></div>
+            </div>
+            <div class="ai-directory-controls">
+              <select id="aiRootSelect" aria-label="AI workspace root"></select>
+              <input id="aiDirectory" aria-label="AI working directory" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off">
+              <button id="aiUseFiles" class="button subtle" type="button">Use Files folder</button>
+            </div>
+            <p id="aiDirectoryHint">The directory is checked against your configured OpenRSC roots before anything starts.</p>
+          </section>
+
+          <div class="ai-provider-grid">
+            <article class="ai-provider-card claude-card">
+              <header><span class="ai-provider-icon"><svg class="ui-icon"><use href="#icon-command"></use></svg></span><span id="claudeCliStatus" class="ai-status-chip">Checking…</span></header>
+              <div class="ai-provider-copy"><span class="ai-provider-kicker">Claude Code</span><h2>Claude CLI</h2><p>A clean browser-friendly Claude CLI with persistent conversation context and normal project permissions.</p></div>
+              <button class="ai-launch" data-ai-provider="claude-cli" type="button"><span>Open Claude CLI</span><svg class="ui-icon"><use href="#icon-chevron-right"></use></svg></button>
+            </article>
+
+            <article class="ai-provider-card claude-card">
+              <header><span class="ai-provider-icon"><svg class="ui-icon"><use href="#icon-radio"></use></svg></span><span id="claudeRemoteStatus" class="ai-status-chip">Checking…</span></header>
+              <div class="ai-provider-copy"><span class="ai-provider-kicker">Claude Code</span><h2>Claude Remote</h2><p>Starts Claude Remote Control in the selected directory and shows its connection flow in a terminal tab.</p></div>
+              <button class="ai-launch" data-ai-provider="claude-remote" type="button"><span>Start remote session</span><svg class="ui-icon"><use href="#icon-chevron-right"></use></svg></button>
+            </article>
+
+            <article class="ai-provider-card codex-card">
+              <header><span class="ai-provider-icon"><svg class="ui-icon"><use href="#icon-bot"></use></svg></span><span id="codexCliStatus" class="ai-status-chip">Checking…</span></header>
+              <div class="ai-provider-copy"><span class="ai-provider-kicker">OpenAI Codex</span><h2>Codex CLI</h2><p>A persistent line-mode Codex session that works inside the OpenRSC terminal without TUI rendering issues.</p></div>
+              <button class="ai-launch" data-ai-provider="codex-cli" type="button"><span>Open Codex CLI</span><svg class="ui-icon"><use href="#icon-chevron-right"></use></svg></button>
+            </article>
+
+            <article class="ai-provider-card codex-card featured">
+              <header><span class="ai-provider-icon"><svg class="ui-icon"><use href="#icon-external-link"></use></svg></span><span id="codexAppStatus" class="ai-status-chip">Checking…</span></header>
+              <div class="ai-provider-copy"><span class="ai-provider-kicker">Remote Codex</span><h2>Codex app</h2><p>Opens the signed-in Codex desktop app directly in this workspace and keeps your existing wireless control connection.</p></div>
+              <button class="ai-launch" data-ai-provider="codex-app" type="button"><span>Open Codex app</span><svg class="ui-icon"><use href="#icon-external-link"></use></svg></button>
+            </article>
+          </div>
+
+          <div class="ai-session-note"><span><svg class="ui-icon"><use href="#icon-shield"></use></svg></span><div><strong>Directory-bound launch</strong><p>OpenRSC accepts only existing folders inside the configured file roots and never accepts a custom executable or raw launch command.</p></div></div>
+        </section>
+
+        <section id="securityView" class="view content-view" aria-labelledby="securityTitle">
+          <div class="view-heading"><div><p class="eyebrow">Runtime</p><h1 id="securityTitle">Security</h1><p>Live posture for this OpenRSC session.</p></div></div>
+          <div class="security-grid">
+            <article class="metric-card"><span>Connection</span><strong id="securityConnection">—</strong><small>Origin and session cookies</small></article>
+            <article class="metric-card"><span>Process access</span><strong id="securityAdmin">—</strong><small>Commands inherit this token</small></article>
+            <article class="metric-card"><span>Session expiry</span><strong id="securityExpiry">—</strong><small>Server-side revocable session</small></article>
+            <article class="metric-card"><span>File boundary</span><strong id="securityRoots">—</strong><small>Canonical path confinement</small></article>
+          </div>
+          <article class="security-detail">
+            <div><span class="shield"><svg class="ui-icon" aria-hidden="true"><use href="#icon-shield"></use></svg></span><div><h2>Defense in depth</h2><p>OpenRSC keeps the control plane lean and stores no secrets in browser storage.</p></div></div>
+            <ul>
+              <li>PBKDF2-SHA256 salted password verification</li>
+              <li>HttpOnly, SameSite cookies with HTTPS secure mode</li>
+              <li>Signed sessions, CSRF checks, origin validation, and login lockouts</li>
+              <li>Loopback-only origin behind a Cloudflare Tunnel</li>
+              <li>ZIP traversal and symbolic-link protection</li>
+              <li>Privacy-preserving command audit hashes</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header><h2 id="modalTitle">Preview</h2><button class="icon-button" data-close-modal type="button" aria-label="Close"><svg class="ui-icon"><use href="#icon-x"></use></svg></button></header>
+      <div id="modalBody" class="modal-body"></div>
+    </section>
+  </div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <script src="/app.js?v=20260829.13" defer></script>
+</body>
+</html>

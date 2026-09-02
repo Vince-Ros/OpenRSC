@@ -1,0 +1,26 @@
+{
+  "name": "OpenRSC Remote Command Workspace",
+  "short_name": "OpenRSC",
+  "description": "A private remote terminal and file workspace.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#171717",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
