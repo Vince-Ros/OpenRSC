@@ -2,6 +2,18 @@
 setlocal EnableExtensions
 cd /d "%~dp0"
 
+if not exist "%~dp0openrsc\__init__.py" goto missing_openrsc_source
+if not exist "%~dp0openrsc\config.py" goto missing_openrsc_source
+if not exist "%~dp0openrsc\__main__.py" goto missing_openrsc_source
+goto openrsc_source_ready
+
+:missing_openrsc_source
+echo LAUNCHER_ERROR: This OpenRSC source copy is incomplete; the openrsc folder must be beside launch-openrsc.cmd. 1>&2
+echo Download or clone the complete repository from https://github.com/Vince-Ros/OpenRSC. 1>&2
+exit /b 2
+
+:openrsc_source_ready
+
 set "PYEXE="
 set "PYARGS="
 where py.exe >nul 2>nul

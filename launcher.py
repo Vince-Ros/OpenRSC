@@ -47,10 +47,46 @@ CREDENTIALS_DIR = CLOUDFLARE / "credentials"
 STARTUP_ENTRY_NAME = "OpenRSC.vbs"
 STARTUP_CHOICE_NAME = "startup-choice.json"
 INTERNET_PROBE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
+OPENRSC_REQUIRED_FILES = (
+    "openrsc/__init__.py",
+    "openrsc/__main__.py",
+    "openrsc/ai.py",
+    "openrsc/ai_cli.py",
+    "openrsc/audit.py",
+    "openrsc/auth.py",
+    "openrsc/config.py",
+    "openrsc/files.py",
+    "openrsc/server.py",
+    "openrsc/terminal.py",
+    "openrsc/uploads.py",
+    "openrsc/web/app-icon.svg",
+    "openrsc/web/app.js",
+    "openrsc/web/apple-touch-icon.png",
+    "openrsc/web/index.html",
+    "openrsc/web/manifest.webmanifest",
+    "openrsc/web/styles.css",
+)
 
 
 class LauncherError(RuntimeError):
     pass
+
+
+def require_openrsc_source_tree(project=None):
+    """Reject partial source downloads before importing the local package."""
+    project = Path(PROJECT if project is None else project).resolve()
+    missing = [
+        relative
+        for relative in OPENRSC_REQUIRED_FILES
+        if not (project / relative).is_file()
+    ]
+    if missing:
+        raise LauncherError(
+            "OpenRSC source tree is incomplete; missing: %s. "
+            "Download or clone the complete repository from https://github.com/Vince-Ros/OpenRSC."
+            % ", ".join(missing)
+        )
+    return project / "openrsc"
 
 
 def _hidden_subprocess_kwargs():
@@ -1018,6 +1054,7 @@ def _restrict_runtime_permissions(config_path, data_path):
 
 def _ensure_openrsc_config(config_path, port):
     config_path = Path(config_path).resolve()
+    require_openrsc_source_tree()
     sys.path.insert(0, str(PROJECT))
     from openrsc.config import ConfigurationError, build_config, load_config, write_config
 
@@ -1057,6 +1094,7 @@ def _check_only(args):
     ok = True
     print("CHECK python=%s.%s status=ok" % sys.version_info[:2])
     try:
+        require_openrsc_source_tree()
         sys.path.insert(0, str(PROJECT))
         from openrsc.config import load_config
 

@@ -17,6 +17,32 @@ TUNNEL_ID = "4ebad8db-43f9-4ce7-8ddf-aa56b89b3cab"
 
 
 class LauncherValidationTests(unittest.TestCase):
+    def test_source_tree_preflight_accepts_complete_repository(self) -> None:
+        self.assertEqual(
+            launcher.require_openrsc_source_tree(), launcher.PROJECT / "openrsc"
+        )
+
+    def test_source_tree_preflight_reports_every_missing_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            package = project / "openrsc"
+            package.mkdir()
+            (package / "__init__.py").write_text("", encoding="utf-8")
+            with self.assertRaises(launcher.LauncherError) as raised:
+                launcher.require_openrsc_source_tree(project)
+        message = str(raised.exception)
+        self.assertIn("OpenRSC source tree is incomplete", message)
+        self.assertIn("openrsc/config.py", message)
+        self.assertIn("openrsc/web/index.html", message)
+        self.assertIn("https://github.com/Vince-Ros/OpenRSC", message)
+
+    def test_windows_bootstrap_checks_local_package_before_python(self) -> None:
+        bootstrap = (launcher.PROJECT / "launch-openrsc.cmd").read_text(encoding="utf-8")
+        preflight = bootstrap.index('if not exist "%~dp0openrsc\\__init__.py"')
+        python_launch = bootstrap.index('"%PYEXE%" %PYARGS% "%~dp0launcher.py"')
+        self.assertLess(preflight, python_launch)
+        self.assertIn("goto missing_openrsc_source", bootstrap)
+
     def test_windows_release_asset_and_published_checksum(self) -> None:
         self.assertEqual(
             launcher.cloudflared_asset_name("Windows", "AMD64"),
