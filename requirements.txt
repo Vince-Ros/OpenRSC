@@ -1,0 +1,2 @@
+# OpenRSC has no third-party Python package dependencies.
+# Python 3.11 or newer is required; the application uses only the standard library.

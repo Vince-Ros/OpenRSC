@@ -64,6 +64,11 @@ Run `setup-openrsc.cmd --help` for every field and toggle. Machine-specific
 choices are stored in `config\setup.json`; authentication secrets remain in the
 generated private OpenRSC and Cloudflare configuration files.
 
+The Windows setup bootstrap installs every package declared in
+`requirements.txt` before opening the setup tool. OpenRSC currently has no
+third-party Python package dependencies, so the file documents the Python 3.11+
+requirement and is ready for future package additions.
+
 ### Direct launcher
 
 Open a terminal in this directory and run either entrypoint:
@@ -79,7 +84,8 @@ python .\launcher.py
 On the first run the launcher performs this sequence:
 
 1. Detects Python 3.11+. The `.cmd` bootstrap installs Python 3.14 with `winget`
-   if no suitable interpreter exists.
+   if no suitable interpreter exists, ensures `pip` is available, and installs
+   the entries in `requirements.txt`.
 2. Requests Windows administrator elevation in a visible console so terminal
    commands inherit an administrator token and first-run prompts stay usable.
 3. Detects the OpenRSC configuration. A fresh source copy prompts twice for a

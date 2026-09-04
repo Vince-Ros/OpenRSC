@@ -32,5 +32,27 @@ if not defined PYEXE (
     set "PYARGS=-3"
 )
 
+if not exist "%~dp0requirements.txt" (
+    echo SETUP_ERROR: requirements.txt was not found. 1>&2
+    exit /b 2
+)
+
+"%PYEXE%" %PYARGS% -m pip --version >nul 2>nul
+if errorlevel 1 (
+    echo [setup] Bootstrapping pip...
+    "%PYEXE%" %PYARGS% -m ensurepip --upgrade
+    if errorlevel 1 (
+        echo SETUP_ERROR: pip could not be installed. 1>&2
+        exit /b 2
+    )
+)
+
+echo [setup] Installing Python requirements...
+"%PYEXE%" %PYARGS% -m pip install --disable-pip-version-check --requirement "%~dp0requirements.txt"
+if errorlevel 1 (
+    echo SETUP_ERROR: Python requirements installation failed. 1>&2
+    exit /b 2
+)
+
 "%PYEXE%" %PYARGS% "%~dp0setup_openrsc.py" %*
 exit /b %errorlevel%

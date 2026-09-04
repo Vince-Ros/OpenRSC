@@ -10,6 +10,24 @@ import setup_openrsc
 from openrsc.config import build_config, load_config, verify_password, write_config
 
 
+PROJECT = Path(__file__).resolve().parents[1]
+
+
+class RequirementsBootstrapTests(unittest.TestCase):
+    def test_requirements_documents_dependency_contract(self) -> None:
+        requirements = (PROJECT / "requirements.txt").read_text(encoding="utf-8")
+        self.assertIn("no third-party Python package dependencies", requirements)
+        self.assertIn("Python 3.11 or newer is required", requirements)
+
+    def test_windows_setup_installs_requirements_before_opening_setup(self) -> None:
+        bootstrap = (PROJECT / "setup-openrsc.cmd").read_text(encoding="utf-8")
+        requirements_install = bootstrap.index("-m pip install")
+        setup_launch = bootstrap.index('"%~dp0setup_openrsc.py"')
+        self.assertLess(requirements_install, setup_launch)
+        self.assertIn('--requirement "%~dp0requirements.txt"', bootstrap)
+        self.assertIn("SETUP_ERROR: requirements.txt was not found.", bootstrap)
+
+
 class SetupSettingsTests(unittest.TestCase):
     def test_settings_round_trip_keeps_every_setup_toggle(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
